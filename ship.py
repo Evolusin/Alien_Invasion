@@ -8,7 +8,8 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
 
         #load ship
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image_load = pygame.image.load('images/ship_v2.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image_load,(100,74))
         self.rect = self.image.get_rect()
         # Start ship on bottom screem
         self.rect.midbottom = self.screen_rect.midbottom
