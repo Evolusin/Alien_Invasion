@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     """Menage game assets and behavior"""
@@ -15,12 +16,15 @@ class AlienInvasion:
             ((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
+
 
     def run_game(self):
         """Start game"""
         while True:
             self._check_events()
             self._update_screen()
+            self.bullets.update()
             self.ship.update()
     def _check_events(self):
         """Responds to keypresses and mouse events"""
@@ -37,6 +41,9 @@ class AlienInvasion:
         # Set up filling screen
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+        # Bullets
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         # Draw screen visable
         pygame.display.flip()
 
@@ -50,6 +57,10 @@ class AlienInvasion:
             self.ship.moving_up = True
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = True
+        elif event.key == pygame.K_a:
+            self._fire_bullets()
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def _check_keyup_events(self,event):
         """Respond to keypresses"""
@@ -61,8 +72,10 @@ class AlienInvasion:
             self.ship.moving_up = False
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = False
-        elif event.key == pygame.K_q:
-            sys.exit()
+    def _fire_bullets(self):
+        """Create bullet and it to bullets Group"""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
 if __name__ == '__main__':
     # Make instance and run game
     ai = AlienInvasion()
