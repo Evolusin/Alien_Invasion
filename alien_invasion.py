@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     """Menage game assets and behavior"""
@@ -17,14 +18,16 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
 
 
     def run_game(self):
         """Start game"""
         while True:
             self._check_events()
+            self._update_bullets()
             self._update_screen()
-            self.bullets.update()
             self.ship.update()
     def _check_events(self):
         """Responds to keypresses and mouse events"""
@@ -36,6 +39,10 @@ class AlienInvasion:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+    def _create_fleet(self):
+        """Create fleet of aliens"""
+        alien = Alien(self)
+        self.aliens.add(alien)
     def _update_screen(self):
         """Update and refresh screen"""
         # Set up filling screen
@@ -44,8 +51,17 @@ class AlienInvasion:
         # Bullets
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        # Alien creation
+        self.aliens.draw(self.screen)
         # Draw screen visable
         pygame.display.flip()
+
+    def _update_bullets(self):
+        self.bullets.update()
+        # get rid of bullets
+        for i in self.bullets.copy():
+            if i.rect.bottom <= 0:
+                self.bullets.remove(i)
 
     def _check_keydown_events(self,event):
         """Respond to keypresses"""
@@ -74,8 +90,9 @@ class AlienInvasion:
             self.ship.moving_down = False
     def _fire_bullets(self):
         """Create bullet and it to bullets Group"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullet_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 if __name__ == '__main__':
     # Make instance and run game
     ai = AlienInvasion()
