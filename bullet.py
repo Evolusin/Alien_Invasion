@@ -14,7 +14,7 @@ class Bullet(Sprite):
         # Create a bullet rect at (0.0) and then set correct position
         # self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
         self.image_load = pygame.image.load('images/knopers.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image_load, (64, 46))
+        self.image = pygame.transform.scale(self.image_load, (64, 48))
         self.rect = self.image.get_rect()
         self.rect.midtop = ai_game.ship.rect.midtop
         # Store bullet position in decimal value
