@@ -10,8 +10,8 @@ class Alien(Sprite):
         self.screen = ai_game.screen
 
         #load alien image
-        self.image_load = pygame.image.load('images/alien_v2.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image_load, (64, 34))
+        self.image_load = pygame.image.load('images/Maciej.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image_load, (80, 64))
         self.rect = self.image.get_rect()
 
         # Start new alien and top left of screen
