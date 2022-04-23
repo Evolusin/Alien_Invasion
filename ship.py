@@ -9,8 +9,8 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
 
         #load ship
-        self.image_load = pygame.image.load('images/ship_v2.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image_load,(100,74))
+        self.image_load = pygame.image.load('images/Szafa.jpg').convert_alpha()
+        self.image = pygame.transform.scale(self.image_load,(100,120))
         self.rect = self.image.get_rect()
         # Start ship on bottom screem
         self.rect.midbottom = self.screen_rect.midbottom
@@ -42,3 +42,8 @@ class Ship:
         # Update rect object from self.x
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def center_ship(self):
+        """Centre the ship on the screen"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        # self.x = float(self.rect.x)
