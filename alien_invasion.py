@@ -113,6 +113,7 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
         # Draw button
         if self.stats.game_active == False:
+            self.settings.initialize_dynamic_settings()
             self.play_button.draw_button()
         # Draw screen visable
         pygame.display.flip()
@@ -142,6 +143,7 @@ class AlienInvasion:
             # Destroy existing bullets and create new fleet
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _check_keydown_events(self,event):
         """Respond to keypresses"""
@@ -160,9 +162,13 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
 
-    def _check_play_button(self,mouse_pos):
+    def _check_play_button(self, mouse_pos=''):
         """Start the new game when play is pressed"""
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        # if mouse_pos not False
+        if mouse_pos != '':
+            button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        else:
+            button_clicked = True
         if button_clicked and not self.stats.game_active:
             self.stats.reset_stats()
             self.stats.game_active = True
