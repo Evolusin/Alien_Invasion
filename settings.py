@@ -9,7 +9,7 @@ class Settings:
         self.bg_color = (100, 100, 255)
         # Ship settings
         self.ship_speed = 0.2
-        self.ship_limit = 3
+        self.ship_limit = 1
         # Bullet settings
         self.bullet_speed = 0.2
         self.bullet_width = 3
@@ -32,6 +32,8 @@ class Settings:
         self.bullet_speed = 0.2
         self.alien_speed = 0.12
         self.fleet_direction = 1
+        # Scores
+        self.alien_points = 50
 
     def increase_speed(self):
         """Increase speed"""
