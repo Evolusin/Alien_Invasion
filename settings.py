@@ -17,7 +17,24 @@ class Settings:
         self.bullet_color = (0, 0, 60)
         self.bullet_allowed = 3
         # Alien settings
-        self.alien_speed = 0.3
+        self.alien_speed = 0.12
         self.fleet_drop_speed = 20
         # Fleet direction 1 represents right; -1 represents left
         self.fleet_direction = 1
+
+        # Speed-up scale
+        self.speedup_scale = 1.3
+        self.initialize_dynamic_settings()
+
+    def initialize_dynamic_settings(self):
+        """Init settings that change"""
+        self.ship_speed = 0.35
+        self.bullet_speed = 0.2
+        self.alien_speed = 0.12
+        self.fleet_direction = 1
+
+    def increase_speed(self):
+        """Increase speed"""
+        # self.ship_speed *= self.speedup_scale
+        # self.bullet_speed *= self.speedup_scale
+        self.alien_speed *= self.speedup_scale
