@@ -1,6 +1,7 @@
 import sys
 from time import sleep
 import pygame
+import json
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
@@ -33,6 +34,7 @@ class AlienInvasion:
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
         self.play_button = Button(self, "Play")
+        self.sb.read_high_score()
 
 
 
@@ -50,6 +52,7 @@ class AlienInvasion:
         # Watch for keyboard and mouse
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self.sb.save_high_score()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -151,8 +154,10 @@ class AlienInvasion:
             self._create_fleet()
             self.settings.increase_speed()
         if collisons:
-            self.stats.score += self.settings.alien_points
+            for aliens in collisons.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
+            self.sb.check_high_score()
 
     def _check_keydown_events(self,event):
         """Respond to keypresses"""
